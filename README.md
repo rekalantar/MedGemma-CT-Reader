@@ -88,10 +88,15 @@ inputs = processor.apply_chat_template(
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rekalantar/MedGemma-CT-Reader/blob/main/tutorial/medgemma_ct.ipynb)
 
-Self-contained — every function is defined in the notebook. It loads a CT case from the
-MedSAM2 demo set (NIfTI, no Google Cloud credentials needed, unlike MedGemma's own CT
-notebook), shows what each window channel contributes, then **sweeps slice counts until the
-GPU runs out of memory** so you know what your hardware can actually hold.
+Self-contained — every function is defined in the notebook.
+
+**Sections 1–5 need no GPU, no account and no model download.** They load a CT case from the
+MedSAM2 demo set (NIfTI, public, unlike MedGemma's own CT notebook which needs Google Cloud
+credentials), show what each window channel contributes, and build the prompt. Pure NumPy.
+
+**Section 6 runs the model**, which needs a GPU runtime and a gated-model token. It tries
+16-bit, falls back to 4-bit, then sweeps slice counts until the GPU runs out of memory — so
+you learn what your hardware actually holds, which the documentation does not say.
 
 ## API
 
@@ -128,7 +133,7 @@ pytest
 - **It is not a diagnostic tool.** MedGemma's CT-RATE Macro F1 is 26.9 — better than
   general-purpose models, nowhere near clinical reliability.
 - **85 slices is a cap, not a guarantee.** Whether your GPU holds that many is what the
-  notebook measures.
+  notebook measures. On a free Colab T4 it does not — section 6 reports the real ceiling.
 
 ## Reference
 
