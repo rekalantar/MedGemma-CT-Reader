@@ -1,0 +1,43 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "medgemma-ct"
+version = "0.1.0"
+description = "Read a 3D CT volume with MedGemma 1.5: three-window RGB encoding, slice sampling and prompt construction"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "Reza Kalantar" }]
+keywords = ["medgemma", "medical-imaging", "vision-language-model", "ct", "radiology"]
+classifiers = [
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Medical Science Apps.",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+]
+dependencies = ["numpy>=1.26", "pillow>=10.0"]
+
+[project.optional-dependencies]
+io = ["SimpleITK>=2.3"]
+model = ["torch>=2.4", "transformers>=4.50", "accelerate>=0.30"]
+dev = ["pytest>=8.0", "ruff>=0.5"]
+
+[project.urls]
+Homepage = "https://github.com/rekalantar/MedGemma-CT-Reader"
+Article = "ARTICLE_URL"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/medgemma_ct"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+# pinned explicitly so a future ruff release cannot turn CI red on its own
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
