@@ -22,7 +22,8 @@ dependencies = ["numpy>=1.26", "pillow>=10.0"]
 [project.optional-dependencies]
 io = ["SimpleITK>=2.3"]
 model = ["torch>=2.4", "transformers>=4.50", "accelerate>=0.30"]
-dev = ["pytest>=8.0", "ruff>=0.5"]
+dev = ["pytest>=8.0", "ruff==0.17.0"]   # pinned: new ruff rules land inside
+                                        # selected categories and break CI
 
 [project.urls]
 Homepage = "https://github.com/rekalantar/MedGemma-CT-Reader"

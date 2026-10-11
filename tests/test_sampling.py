@@ -24,7 +24,8 @@ def test_long_volume_is_capped():
 def test_matches_the_reference_formula():
     """Upstream: [int(round(i / MAX * (D - 1))) for i in range(1, MAX + 1)]."""
     for depth in (86, 120, 333, 1000):
-        reference = [int(round(i / MAX_SLICES * (depth - 1)))
+        # int(round(...)) mirrors upstream verbatim; round() alone already returns int
+        reference = [int(round(i / MAX_SLICES * (depth - 1)))  # noqa: RUF046
                      for i in range(1, MAX_SLICES + 1)]
         assert sample_indices(depth) == reference, f"depth {depth}"
 
@@ -37,7 +38,7 @@ def test_indices_are_sorted_and_in_range():
 
 def test_spacing_is_even():
     picked = sample_indices(850)
-    gaps = {b - a for a, b in zip(picked, picked[1:])}
+    gaps = {picked[i + 1] - picked[i] for i in range(len(picked) - 1)}
     assert gaps <= {9, 10}                     # evenly spread, +/- rounding
 
 
